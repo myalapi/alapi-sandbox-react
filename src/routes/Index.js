@@ -8,6 +8,9 @@ export default function Index() {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+
+    //create account in finance ai and gets a merchant Id
+
     createMerchant(onComplete, (m) => {
       alert(m);
     });
