@@ -16,6 +16,9 @@ function Home() {
       <button id="abde" onClick={onClick}>
         Zoho
       </button>
+      <button id="bcde" onClick={onClick}>
+        quickBooks
+      </button>
       <button id="" onClick={clickInvoice}>
         Get Invoices
       </button>

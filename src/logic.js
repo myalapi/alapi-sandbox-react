@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const clientId = "daa0afc7cfda262b10fd7c55";
-const clientSecret = "d1ddc68598b1d5d4b26b5870";
+const clientId = "75919becb50bafdce04938f8";
+const clientSecret = "3eb346707d5ba45a8095bf20";
 
 const base64 = require("base-64");
 
@@ -64,6 +64,7 @@ export const getInvoices= async ( onError=()=>{}) => {
     let url = "http://localhost:2000/api/accounting/invoices";
     try {
       const res = await axios.get(url, {
+        params: body,
         headers: {
           "Content-Type": "application/json",
           Authorization: "Basic " + base64.encode(clientId + ":" + clientSecret),
