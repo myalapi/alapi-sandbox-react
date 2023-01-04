@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const clientId = "75919becb50bafdce04938f8";
-const clientSecret = "3eb346707d5ba45a8095bf20";
+const clientId = "daa0afc7cfda262b10fd7c55";
+const clientSecret = "d1ddc68598b1d5d4b26b5870";
 
 const base64 = require("base-64");
 
