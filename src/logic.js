@@ -1,14 +1,14 @@
 import axios from "axios";
 
-const clientId = "daa0afc7cfda262b10fd7c55";
-const clientSecret = "d1ddc68598b1d5d4b26b5870";
+const clientId = "2981f70b889b43c0d6855cda";
+const clientSecret = "85f439472c721b15a1ceae49";
 
 const base64 = require("base-64");
 
 export const createMerchant = async (onComplete, onError) => {
   const body = {
     merchantId: "123123123",
-    merchantName: "New Merchant",
+    merchantName: "Ginkgos",
   };
   let url = "http://localhost:2000/user/merchant";
   try {
@@ -71,9 +71,8 @@ export const getInvoices= async ( onError=()=>{}) => {
         },
       });
       if (res.data.success) {
-        const rurl = res.data.redirectUrl;
-        console.log(rurl);
-        window.location.href = rurl;
+        const data = res.data.data;
+        console.log(data);
   
       } else {
         onError(res.data.msg);
