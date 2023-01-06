@@ -57,11 +57,11 @@ export const getRedirectUrl = async (platformId, onError=()=>{}) => {
     alert(error);
   }
 };
-export const getInvoices= async ( onError=()=>{}) => {
+export const getData = async (dataType, onError=()=>{}) => {
     const body = {
       merchantId: "123123123",
     };
-    let url = "http://localhost:2000/api/accounting/invoices";
+    let url = `http://localhost:2000/api/accounting/${dataType}`;
     try {
       const res = await axios.get(url, {
         params: body,
@@ -73,7 +73,7 @@ export const getInvoices= async ( onError=()=>{}) => {
       if (res.data.success) {
         const data = res.data.data;
         console.log(data);
-  
+        return data;
       } else {
         onError(res.data.msg);
       }
