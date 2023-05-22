@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const clientId = "2981f70b889b43c0d6855cda";
-const clientSecret = "85f439472c721b15a1ceae49";
+const clientId = "20da64b66ebe8bcc9f9359ee";
+const clientSecret = "3ce3282486ff36f960320071";
 
 const base64 = require("base-64");
 
-export const createMerchant = async (onComplete, onError) => {
+export const createMerchant = async (name) => {
   const body = {
-    merchantId: "123123123",
-    merchantName: "Ginkgos",
+    merchantId: Date.now().toLocaleString(),
+    merchantName: `${name ? name : "Ginkgos"}`,
   };
-  let url = "http://localhost:2000/user/merchant";
+  let url = "http://localhost:2000/v1/merchant";
   try {
     const res = await axios.post(url, body, {
       headers: {
@@ -21,22 +21,21 @@ export const createMerchant = async (onComplete, onError) => {
     if (res.data.success) {
       const data = res.data;
       console.log(data.id, data.name);
-      onComplete();
+      return true;
     } else {
-      onError(res.data.msg);
     }
   } catch (error) {
     console.log(error);
-    alert(error);
+    return false;
   }
 };
-
-export const getRedirectUrl = async (platformId, onError=()=>{}) => {
+// Temporary COmment
+export const getRedirectUrl = async (platformId, onError = () => {}) => {
   const body = {
-    merchantId: "123123123",
-    platformId: platformId,
+    platformKey: platformId,
   };
-  let url = "http://localhost:2000/user/getUrl";
+  let url =
+    "http://localhost:2000/v1/merchant/63f64c349eb34527e6a1a304/platform";
   try {
     const res = await axios.post(url, body, {
       headers: {
@@ -45,10 +44,9 @@ export const getRedirectUrl = async (platformId, onError=()=>{}) => {
       },
     });
     if (res.data.success) {
-      const rurl = res.data.redirectUrl;
+      const rurl = res.data.link;
       console.log(rurl);
       window.location.href = rurl;
-
     } else {
       onError(res.data.msg);
     }
@@ -57,28 +55,28 @@ export const getRedirectUrl = async (platformId, onError=()=>{}) => {
     alert(error);
   }
 };
-export const getData = async (dataType, onError=()=>{}) => {
-    const body = {
-      merchantId: "123123123",
-    };
-    let url = `http://localhost:2000/api/accounting/${dataType}`;
-    try {
-      const res = await axios.get(url, {
-        params: body,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Basic " + base64.encode(clientId + ":" + clientSecret),
-        },
-      });
-      if (res.data.success) {
-        const data = res.data.data;
-        console.log(data);
-        return data;
-      } else {
-        onError(res.data.msg);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
+export const getData = async (dataType, onError = () => {}) => {
+  const body = {
+    merchantId: "123123123",
   };
+  let url = `http://localhost:2000/api/accounting/${dataType}`;
+  try {
+    const res = await axios.get(url, {
+      params: body,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic " + base64.encode(clientId + ":" + clientSecret),
+      },
+    });
+    if (res.data.success) {
+      const data = res.data.data;
+      console.log(data);
+      return data;
+    } else {
+      onError(res.data.msg);
+    }
+  } catch (error) {
+    console.log(error);
+    alert(error);
+  }
+};

@@ -20,7 +20,7 @@ function Home() {
           Zoho
         </button>
         <button id="bcde" onClick={onClick}>
-          quickBooks
+          Tally
         </button>
         <button id="invoices" onClick={click}>
           Get Invoices
