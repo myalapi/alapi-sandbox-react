@@ -1,46 +1,42 @@
-import React, { useState } from 'react'
-import { getData, getRedirectUrl } from '../logic';
-
+import React, { useContext, useEffect, useState } from "react";
+import AuthContext from "../store/auth.context";
+import AlapiService from "../service/plat.service";
 function Home() {
+  const authContext = useContext(AuthContext);
+  const [merchant, setMerchant] = useState(null);
+  useEffect(() => {
+    const temp = async () => {
+      const alapiMerchant = await AlapiService.getMerchant(authContext.alapiId);
+      setMerchant(JSON.stringify(alapiMerchant));
+    };
+    temp();
+  }, [authContext]);
 
-  const [data, setData] = useState(null);
-
-  async function onClick (e){
-    console.log(e.target.id);
-    const rurl = await getRedirectUrl(e.target.id);
+  async function onClick(e) {
+    const link = await AlapiService.getRedirectUrl(
+      authContext.alapiId,
+      e.target.id
+    );
+    window.open(link, "_blank");
   }
 
-  async function click(e) {
-    setData(await getData(e.target.id));
-  }
   return (
-    <div>
+    <div className="d-flex flex-column gap-3">
+      <div>Comapny: {authContext.companyName}</div>
+      <div>Alapi Id: {authContext.alapiId}</div>
+      <div>Details: </div>
+      <div>{merchant}</div>
+      <div>Connect Platforms</div>
       <div>
         <button id="abde" onClick={onClick}>
           Zoho
         </button>
-        <button id="bcde" onClick={onClick}>
+        <button id="abgf" onClick={onClick}>
           Tally
         </button>
-        <button id="invoices" onClick={click}>
-          Get Invoices
-        </button>
-        <button id="expenses" onClick={click}>
-          Get Expenses
-        </button>
-        <button id="bills" onClick={click}>
-          Get Bills
-        </button>
-        <button id="creditNotes" onClick={click}>
-          Get Credit Notes
-        </button>
-      </div>
-
-      <div>
-        {JSON.stringify(data)}
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
